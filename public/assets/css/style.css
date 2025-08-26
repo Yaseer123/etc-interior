@@ -27,6 +27,7 @@
 ====================================================================
 ***/
 /* Module Css */
+@import "tailwindcss";
 @import url('./all.min.css');
 @import url('./animate.min.css');
 @import url('./bootstrap.min.css');
