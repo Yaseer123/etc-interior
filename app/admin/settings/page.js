@@ -35,7 +35,33 @@ export default function SiteSettings() {
       const response = await fetch("/api/admin/settings");
       if (response.ok) {
         const data = await response.json();
-        setSettings(data);
+        // Ensure socialLinks object exists with default values
+        setSettings({
+          siteName: "",
+          siteDescription: "",
+          logo: "",
+          favicon: "",
+          phone: "",
+          email: "",
+          address: "",
+          socialLinks: {
+            facebook: "",
+            twitter: "",
+            instagram: "",
+            linkedin: "",
+          },
+          seoTitle: "",
+          seoDescription: "",
+          seoKeywords: "",
+          ...data,
+          socialLinks: {
+            facebook: "",
+            twitter: "",
+            instagram: "",
+            linkedin: "",
+            ...data.socialLinks,
+          },
+        });
       }
     } catch (error) {
       console.error("Error fetching settings:", error);
