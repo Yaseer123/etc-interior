@@ -11,6 +11,16 @@ export default function DynamicTitle() {
           if (settings.siteName) {
             document.title = settings.siteName;
           }
+          if (settings.favicon) {
+            // Update favicon
+            const link =
+              document.querySelector("link[rel*='icon']") ||
+              document.createElement("link");
+            link.type = "image/x-icon";
+            link.rel = "shortcut icon";
+            link.href = settings.favicon;
+            document.getElementsByTagName("head")[0].appendChild(link);
+          }
         }
       } catch (error) {
         console.error("Error fetching site settings for title:", error);

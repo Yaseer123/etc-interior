@@ -25,6 +25,8 @@ export default function SiteSettings() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingFavicon, setUploadingFavicon] = useState(false);
 
   useEffect(() => {
     fetchSettings();
@@ -115,6 +117,42 @@ export default function SiteSettings() {
     }
   };
 
+  const handleFileUpload = async (file, type) => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      if (type === "logo") setUploadingLogo(true);
+      if (type === "favicon") setUploadingFavicon(true);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSettings((prev) => ({
+          ...prev,
+          [type]: data.url,
+        }));
+        setMessage(
+          `${type === "logo" ? "Logo" : "Favicon"} uploaded successfully!`
+        );
+      } else {
+        const error = await response.json();
+        setMessage(`Upload failed: ${error.error}`);
+      }
+    } catch (error) {
+      setMessage("Upload failed. Please try again.");
+    } finally {
+      if (type === "logo") setUploadingLogo(false);
+      if (type === "favicon") setUploadingFavicon(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <AdminLayout title="Site Settings">
@@ -174,27 +212,79 @@ export default function SiteSettings() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Logo URL
+                Logo
               </label>
+              <div className="mt-1 flex items-center space-x-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleFileUpload(e.target.files[0], "logo")}
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                  disabled={uploadingLogo}
+                />
+                {uploadingLogo && (
+                  <span className="text-sm text-gray-500">Uploading...</span>
+                )}
+              </div>
+              {settings.logo && (
+                <div className="mt-2">
+                  <img
+                    src={settings.logo}
+                    alt="Current logo"
+                    className="h-12 w-auto border rounded"
+                  />
+                  <p className="text-sm text-gray-500 mt-1">
+                    Current logo URL: {settings.logo}
+                  </p>
+                </div>
+              )}
               <input
                 type="url"
                 name="logo"
                 value={settings.logo}
                 onChange={handleChange}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Or enter logo URL directly"
+                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Favicon URL
+                Favicon
               </label>
+              <div className="mt-1 flex items-center space-x-4">
+                <input
+                  type="file"
+                  accept="image/*,.ico"
+                  onChange={(e) =>
+                    handleFileUpload(e.target.files[0], "favicon")
+                  }
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                  disabled={uploadingFavicon}
+                />
+                {uploadingFavicon && (
+                  <span className="text-sm text-gray-500">Uploading...</span>
+                )}
+              </div>
+              {settings.favicon && (
+                <div className="mt-2">
+                  <img
+                    src={settings.favicon}
+                    alt="Current favicon"
+                    className="h-8 w-8 border rounded"
+                  />
+                  <p className="text-sm text-gray-500 mt-1">
+                    Current favicon URL: {settings.favicon}
+                  </p>
+                </div>
+              )}
               <input
                 type="url"
                 name="favicon"
                 value={settings.favicon}
                 onChange={handleChange}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Or enter favicon URL directly"
+                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               />
             </div>
 
