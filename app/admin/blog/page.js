@@ -8,6 +8,7 @@ export default function BlogPosts() {
   const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -108,6 +109,37 @@ export default function BlogPosts() {
       isActive: true,
       isPublished: false,
     });
+  };
+
+  const handleFileUpload = async (file) => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      setUploadingImage(true);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setFormData((prev) => ({
+          ...prev,
+          image: data.url,
+        }));
+      } else {
+        const error = await response.json();
+        alert(`Upload failed: ${error.error}`);
+      }
+    } catch (error) {
+      alert("Upload failed. Please try again.");
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   const generateSlug = (title) => {
@@ -215,20 +247,37 @@ export default function BlogPosts() {
                 />
               </div>
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Image URL
-                  </label>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Image
+                </label>
+                <div className="mt-1 flex items-center space-x-4">
                   <input
-                    type="url"
-                    value={formData.image}
-                    onChange={(e) =>
-                      setFormData({ ...formData, image: e.target.value })
-                    }
-                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileUpload(e.target.files[0])}
+                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                    disabled={uploadingImage}
                   />
+                  {uploadingImage && (
+                    <span className="text-sm text-gray-500">Uploading...</span>
+                  )}
                 </div>
+                {formData.image && (
+                  <div className="mt-2">
+                    <img
+                      src={formData.image}
+                      alt="Preview"
+                      className="h-20 w-auto border rounded"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      Current image URL: {formData.image}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Author

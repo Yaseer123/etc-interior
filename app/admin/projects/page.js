@@ -8,6 +8,7 @@ export default function Projects() {
   const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
+  const [uploadingImages, setUploadingImages] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -120,6 +121,44 @@ export default function Projects() {
       featured: false,
       order: 0,
     });
+  };
+
+  const handleFileUpload = async (file) => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      setUploadingImages(true);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setFormData((prev) => ({
+          ...prev,
+          images: [...prev.images, data.url],
+        }));
+      } else {
+        const error = await response.json();
+        alert(`Upload failed: ${error.error}`);
+      }
+    } catch (error) {
+      alert("Upload failed. Please try again.");
+    } finally {
+      setUploadingImages(false);
+    }
+  };
+
+  const removeImage = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
+    }));
   };
 
   const generateSlug = (title) => {
@@ -302,22 +341,46 @@ export default function Projects() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Images (JSON array of URLs)
+                  Images
                 </label>
-                <textarea
-                  value={JSON.stringify(formData.images, null, 2)}
-                  onChange={(e) => {
-                    try {
-                      const images = JSON.parse(e.target.value);
-                      setFormData({ ...formData, images });
-                    } catch (error) {
-                      // Invalid JSON, keep as is
-                    }
-                  }}
-                  rows={3}
-                  placeholder='["url1", "url2", "url3"]'
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                />
+                <div className="mt-1 flex items-center space-x-4">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileUpload(e.target.files[0])}
+                    className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                    disabled={uploadingImages}
+                  />
+                  {uploadingImages && (
+                    <span className="text-sm text-gray-500">Uploading...</span>
+                  )}
+                </div>
+
+                {formData.images.length > 0 && (
+                  <div className="mt-4">
+                    <h4 className="text-sm font-medium text-gray-700 mb-2">
+                      Uploaded Images:
+                    </h4>
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                      {formData.images.map((image, index) => (
+                        <div key={index} className="relative">
+                          <img
+                            src={image}
+                            alt={`Project image ${index + 1}`}
+                            className="h-24 w-full object-cover border rounded"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeImage(index)}
+                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">

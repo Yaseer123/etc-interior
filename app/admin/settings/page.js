@@ -238,14 +238,6 @@ export default function SiteSettings() {
                   </p>
                 </div>
               )}
-              <input
-                type="url"
-                name="logo"
-                value={settings.logo}
-                onChange={handleChange}
-                placeholder="Or enter logo URL directly"
-                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-              />
             </div>
 
             <div>
@@ -278,14 +270,6 @@ export default function SiteSettings() {
                   </p>
                 </div>
               )}
-              <input
-                type="url"
-                name="favicon"
-                value={settings.favicon}
-                onChange={handleChange}
-                placeholder="Or enter favicon URL directly"
-                className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-              />
             </div>
 
             <div>
