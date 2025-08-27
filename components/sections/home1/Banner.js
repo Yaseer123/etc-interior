@@ -100,8 +100,7 @@ export default function Banner() {
                 className="image-layer"
                 style={{
                   backgroundImage: `url(${
-                    section.backgroundImage ||
-                    "assets/img/slider/slider-v1-img1.jpg"
+                    section.image || "assets/img/slider/slider-v1-img1.jpg"
                   })`,
                 }}
               ></div>
