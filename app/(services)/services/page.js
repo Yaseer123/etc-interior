@@ -1,4 +1,6 @@
 "use client";
+
+import Layout from "@/components/layout/Layout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -27,39 +29,48 @@ export default function Services() {
   // Default services if none from admin
   const defaultServices = [
     {
-      title: "General Contracting",
+      title: "Architecture Design",
       description:
-        "Through a unique combination of construction and design disciplines expertise, Concor and delivers world class",
-      icon: "icon-construction",
-      slug: "general-contracting",
-    },
-    {
-      title: "Machine Design",
-      description:
-        "Through a unique combination of construction and design disciplines expertise, Concor and delivers world class",
-      icon: "icon-construction-machine",
-      slug: "machine-design",
-    },
-    {
-      title: "Project Planning",
-      description:
-        "Through a unique combination of construction and design disciplines expertise, Concor and delivers world class",
-      icon: "icon-check-list",
-      slug: "project-planning",
+        "Professional architectural design services for residential and commercial projects",
+      icon: "icon-architecture",
+      slug: "architecture-design",
     },
     {
       title: "Interior Design",
-      description:
-        "Through a unique combination of construction and design disciplines expertise, Concor and delivers world class",
+      description: "Complete interior design solutions to transform your space",
       icon: "icon-interior-design",
       slug: "interior-design",
+    },
+    {
+      title: "Construction Management",
+      description: "Expert construction management and supervision services",
+      icon: "icon-construction",
+      slug: "construction-management",
+    },
+    {
+      title: "Building Renovation",
+      description: "Comprehensive renovation services for existing buildings",
+      icon: "icon-renovation",
+      slug: "building-renovation",
+    },
+    {
+      title: "Security Systems",
+      description: "Advanced security system design and installation",
+      icon: "icon-security",
+      slug: "security-systems",
+    },
+    {
+      title: "UI/UX Design",
+      description: "Modern UI/UX design for digital products and applications",
+      icon: "icon-ui-ux",
+      slug: "ui-ux-design",
     },
   ];
 
   const servicesToShow = services.length > 0 ? services : defaultServices;
 
   return (
-    <>
+    <Layout headerStyle={4} footerStyle={1} breadcrumbTitle="Our Services">
       {/*Start Service One */}
       <section className="service-one">
         <div
@@ -71,9 +82,13 @@ export default function Services() {
         <div className="container">
           <div className="sec-title text-center">
             <div className="sub-title">
-              <h5>OUR SERVICE</h5>
+              <h5>OUR SERVICES</h5>
             </div>
             <h2>Our Architecture Services</h2>
+            <p>
+              We provide comprehensive architectural and design services to help
+              you create the perfect space for your needs.
+            </p>
           </div>
           <div className="row">
             {isLoading ? (
@@ -84,7 +99,7 @@ export default function Services() {
               servicesToShow.map((service, index) => (
                 <div
                   key={service.id || index}
-                  className="col-xl-6 col-lg-6 wow animated fadeInUp"
+                  className="col-xl-4 col-lg-6 wow animated fadeInUp"
                   data-wow-delay={`${0.1 + index * 0.1}s`}
                 >
                   <div className="service-one__single">
@@ -125,6 +140,6 @@ export default function Services() {
         </div>
       </section>
       {/*End Service One */}
-    </>
+    </Layout>
   );
 }
