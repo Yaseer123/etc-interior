@@ -1,6 +1,7 @@
 "use client";
 
 import AdminLayout from "@/components/admin/AdminLayout";
+import TipTapEditor from "@/components/admin/TipTapEditor";
 import { useEffect, useState } from "react";
 
 export default function BlogPosts() {
@@ -233,17 +234,13 @@ export default function BlogPosts() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Content
                 </label>
-                <textarea
-                  required
-                  value={formData.content}
-                  onChange={(e) =>
-                    setFormData({ ...formData, content: e.target.value })
-                  }
-                  rows={8}
-                  className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                <TipTapEditor
+                  content={formData.content}
+                  onChange={(content) => setFormData({ ...formData, content })}
+                  placeholder="Start writing your blog post..."
                 />
               </div>
 

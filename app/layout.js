@@ -1,6 +1,7 @@
 import "@/node_modules/react-modal-video/css/modal-video.css";
 import "swiper/css";
 import "../public/assets/css/style.css";
+import "../public/assets/css/tiptap-editor.css";
 // import "swiper/css/navigation"
 import DynamicTitle from "@/components/elements/DynamicTitle";
 import SessionProvider from "@/components/providers/SessionProvider";
