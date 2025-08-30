@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const blogPosts = await prisma.blogPost.findMany({
       where: { isPublished: true },
-      orderBy: { publishedAt: "desc" },
+      orderBy: [{ publishedAt: "desc" }, { createdAt: "desc" }],
     });
     return NextResponse.json(blogPosts);
   } catch (error) {
