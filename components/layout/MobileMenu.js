@@ -1,15 +1,36 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+
 export default function MobileMenu({
   isSidebar,
   handleMobileMenu,
   handleSidebar,
 }) {
+  const pathname = usePathname();
   const [isActive, setIsActive] = useState({
     status: false,
     key: "",
   });
+
+  // Function to check if a menu item should be active
+  const isMenuActive = (href) => {
+    if (href === "/") {
+      return (
+        pathname === "/" || pathname === "/index-2" || pathname === "/index-3"
+      );
+    }
+    if (href === "#") {
+      return false; // Parent menu items with dropdowns
+    }
+    return pathname === href || pathname.startsWith(href + "/");
+  };
+
+  // Function to check if a parent menu item should be active (for dropdowns)
+  const isParentActive = (menuItems) => {
+    return menuItems.some((item) => isMenuActive(item.href));
+  };
 
   const handleToggle = (key) => {
     if (isActive.key === key) {
@@ -38,7 +59,11 @@ export default function MobileMenu({
           </div>
           <div className="menu-outer">
             <ul className="navigation clearfix">
-              <li className="active menu-item-has-children">
+              <li
+                className={`${
+                  isMenuActive("/") ? "active" : ""
+                } menu-item-has-children`}
+              >
                 {" "}
                 <Link href="#" onClick={handleMobileMenu}>
                   Home
@@ -48,17 +73,29 @@ export default function MobileMenu({
                   style={{ display: `${isActive.key == 1 ? "block" : "none"}` }}
                 >
                   <li>
-                    <Link href="/" onClick={handleMobileMenu}>
+                    <Link
+                      href="/"
+                      onClick={handleMobileMenu}
+                      className={pathname === "/" ? "active" : ""}
+                    >
                       Home One
                     </Link>
                   </li>
                   <li>
-                    <Link href="/index-2" onClick={handleMobileMenu}>
+                    <Link
+                      href="/index-2"
+                      onClick={handleMobileMenu}
+                      className={pathname === "/index-2" ? "active" : ""}
+                    >
                       Home Two
                     </Link>
                   </li>
                   <li>
-                    <Link href="/index-3" onClick={handleMobileMenu}>
+                    <Link
+                      href="/index-3"
+                      onClick={handleMobileMenu}
+                      className={pathname === "/index-3" ? "active" : ""}
+                    >
                       Home Three
                     </Link>
                   </li>
@@ -72,15 +109,31 @@ export default function MobileMenu({
                   <span className="fa fa-angle-right" />
                 </div>
               </li>
-              <li>
-                <Link href="/about">About</Link>
+              <li className={isMenuActive("/about") ? "active" : ""}>
+                <Link href="/about" onClick={handleMobileMenu}>
+                  About
+                </Link>
               </li>
-              <li>
+              <li className={isMenuActive("/clients") ? "active" : ""}>
                 <Link href="/clients" onClick={handleMobileMenu}>
                   Clients
                 </Link>
               </li>
-              <li className="menu-item-has-children">
+              <li
+                className={`${
+                  isParentActive([
+                    { href: "/service" },
+                    { href: "/architecture" },
+                    { href: "/interior-design" },
+                    { href: "/uiux-designing" },
+                    { href: "/building-renovation" },
+                    { href: "/construction-site" },
+                    { href: "/security-system" },
+                  ])
+                    ? "active"
+                    : ""
+                } menu-item-has-children`}
+              >
                 <Link href="#" onClick={handleMobileMenu}>
                   Services
                 </Link>
@@ -88,22 +141,42 @@ export default function MobileMenu({
                   style={{ display: `${isActive.key == 2 ? "block" : "none"}` }}
                 >
                   <li>
-                    <Link href="/service" onClick={handleMobileMenu}>
+                    <Link
+                      href="/service"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/service") ? "active" : ""}
+                    >
                       Services
                     </Link>
                   </li>
                   <li>
-                    <Link href="/architecture" onClick={handleMobileMenu}>
+                    <Link
+                      href="/architecture"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/architecture") ? "active" : ""}
+                    >
                       Architecture
                     </Link>
                   </li>
                   <li>
-                    <Link href="/interior-design" onClick={handleMobileMenu}>
+                    <Link
+                      href="/interior-design"
+                      onClick={handleMobileMenu}
+                      className={
+                        isMenuActive("/interior-design") ? "active" : ""
+                      }
+                    >
                       Interior Design
                     </Link>
                   </li>
                   <li>
-                    <Link href="/uiux-designing" onClick={handleMobileMenu}>
+                    <Link
+                      href="/uiux-designing"
+                      onClick={handleMobileMenu}
+                      className={
+                        isMenuActive("/uiux-designing") ? "active" : ""
+                      }
+                    >
                       UiUx Designing
                     </Link>
                   </li>
@@ -111,17 +184,32 @@ export default function MobileMenu({
                     <Link
                       href="/building-renovation"
                       onClick={handleMobileMenu}
+                      className={
+                        isMenuActive("/building-renovation") ? "active" : ""
+                      }
                     >
                       Building Renovation
                     </Link>
                   </li>
                   <li>
-                    <Link href="/construction-site" onClick={handleMobileMenu}>
+                    <Link
+                      href="/construction-site"
+                      onClick={handleMobileMenu}
+                      className={
+                        isMenuActive("/construction-site") ? "active" : ""
+                      }
+                    >
                       Construction Site
                     </Link>
                   </li>
                   <li>
-                    <Link href="/security-system" onClick={handleMobileMenu}>
+                    <Link
+                      href="/security-system"
+                      onClick={handleMobileMenu}
+                      className={
+                        isMenuActive("/security-system") ? "active" : ""
+                      }
+                    >
                       Security System
                     </Link>
                   </li>
@@ -135,7 +223,19 @@ export default function MobileMenu({
                   <span className="fa fa-angle-right" />
                 </div>
               </li>
-              <li className="menu-item-has-children">
+              <li
+                className={`${
+                  isParentActive([
+                    { href: "/team" },
+                    { href: "/projects" },
+                    { href: "/testimonials" },
+                    { href: "/pricing" },
+                    { href: "/faq" },
+                  ])
+                    ? "active"
+                    : ""
+                } menu-item-has-children`}
+              >
                 <Link href="#" onClick={handleMobileMenu}>
                   Pages
                 </Link>
@@ -143,42 +243,76 @@ export default function MobileMenu({
                   style={{ display: `${isActive.key == 3 ? "block" : "none"}` }}
                 >
                   <li>
-                    <Link href="/team" onClick={handleMobileMenu}>
+                    <Link
+                      href="/team"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/team") ? "active" : ""}
+                    >
                       Team
                     </Link>
                   </li>
                   <li>
-                    <Link href="/team-details" onClick={handleMobileMenu}>
+                    <Link
+                      href="/team-details"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/team-details") ? "active" : ""}
+                    >
                       Team Details
                     </Link>
                   </li>
                   <li>
-                    <Link href="/projects" onClick={handleMobileMenu}>
+                    <Link
+                      href="/projects"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/projects") ? "active" : ""}
+                    >
                       Projects
                     </Link>
                   </li>
                   <li>
-                    <Link href="/project-details" onClick={handleMobileMenu}>
+                    <Link
+                      href="/project-details"
+                      onClick={handleMobileMenu}
+                      className={
+                        isMenuActive("/project-details") ? "active" : ""
+                      }
+                    >
                       Project Details
                     </Link>
                   </li>
                   <li>
-                    <Link href="/testimonials" onClick={handleMobileMenu}>
+                    <Link
+                      href="/testimonials"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/testimonials") ? "active" : ""}
+                    >
                       Testimonials
                     </Link>
                   </li>
                   <li>
-                    <Link href="/pricing" onClick={handleMobileMenu}>
+                    <Link
+                      href="/pricing"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/pricing") ? "active" : ""}
+                    >
                       Pricing
                     </Link>
                   </li>
                   <li>
-                    <Link href="/faq" onClick={handleMobileMenu}>
+                    <Link
+                      href="/faq"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/faq") ? "active" : ""}
+                    >
                       Faq
                     </Link>
                   </li>
                   <li>
-                    <Link href="/error" onClick={handleMobileMenu}>
+                    <Link
+                      href="/error"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/error") ? "active" : ""}
+                    >
                       Error
                     </Link>
                   </li>
@@ -192,28 +326,55 @@ export default function MobileMenu({
                   <span className="fa fa-angle-right" />
                 </div>
               </li>
-              <li className="menu-item-has-children" onClick={handleMobileMenu}>
+              <li
+                className={`${
+                  isParentActive([
+                    { href: "/shop" },
+                    { href: "/cart" },
+                    { href: "/checkout" },
+                  ])
+                    ? "active"
+                    : ""
+                } menu-item-has-children`}
+                onClick={handleMobileMenu}
+              >
                 <Link href="#">Shop</Link>
                 <ul
                   style={{ display: `${isActive.key == 4 ? "block" : "none"}` }}
                 >
                   <li>
-                    <Link href="/shop" onClick={handleMobileMenu}>
+                    <Link
+                      href="/shop"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/shop") ? "active" : ""}
+                    >
                       Shop
                     </Link>
                   </li>
                   <li>
-                    <Link href="/shop-details" onClick={handleMobileMenu}>
+                    <Link
+                      href="/shop-details"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/shop-details") ? "active" : ""}
+                    >
                       Shop Details
                     </Link>
                   </li>
                   <li>
-                    <Link href="/cart" onClick={handleMobileMenu}>
+                    <Link
+                      href="/cart"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/cart") ? "active" : ""}
+                    >
                       Cart
                     </Link>
                   </li>
                   <li>
-                    <Link href="checkout" onClick={handleMobileMenu}>
+                    <Link
+                      href="checkout"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/checkout") ? "active" : ""}
+                    >
                       Checkout
                     </Link>
                   </li>
@@ -227,7 +388,17 @@ export default function MobileMenu({
                   <span className="fa fa-angle-right" />
                 </div>
               </li>
-              <li className="menu-item-has-children">
+              <li
+                className={`${
+                  isParentActive([
+                    { href: "/blog" },
+                    { href: "/blog-sidebar" },
+                    { href: "/blog-details" },
+                  ])
+                    ? "active"
+                    : ""
+                } menu-item-has-children`}
+              >
                 <Link href="#" onClick={handleMobileMenu}>
                   Blog
                 </Link>
@@ -235,17 +406,29 @@ export default function MobileMenu({
                   style={{ display: `${isActive.key == 5 ? "block" : "none"}` }}
                 >
                   <li>
-                    <Link href="/blog" onClick={handleMobileMenu}>
+                    <Link
+                      href="/blog"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/blog") ? "active" : ""}
+                    >
                       Blog
                     </Link>
                   </li>
                   <li>
-                    <Link href="/blog-sidebar" onClick={handleMobileMenu}>
+                    <Link
+                      href="/blog-sidebar"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/blog-sidebar") ? "active" : ""}
+                    >
                       Blog Sidebar
                     </Link>
                   </li>
                   <li>
-                    <Link href="/blog-details" onClick={handleMobileMenu}>
+                    <Link
+                      href="/blog-details"
+                      onClick={handleMobileMenu}
+                      className={isMenuActive("/blog-details") ? "active" : ""}
+                    >
                       Blog Details
                     </Link>
                   </li>
@@ -259,7 +442,7 @@ export default function MobileMenu({
                   <span className="fa fa-angle-right" />
                 </div>
               </li>
-              <li>
+              <li className={isMenuActive("/contact") ? "active" : ""}>
                 <Link href="/contact" onClick={handleMobileMenu}>
                   Contact
                 </Link>
