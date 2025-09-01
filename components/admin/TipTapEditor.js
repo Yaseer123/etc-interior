@@ -67,13 +67,23 @@ const MenuBar = ({ editor }) => {
     editor.chain().focus().unsetLink().run();
   };
 
+  // Prevent form submission when clicking formatting buttons
+  const handleButtonClick = (callback) => (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    callback();
+  };
+
   return (
     <div className="border-b border-gray-200 p-4 bg-gray-50 rounded-t-lg">
       <div className="flex flex-wrap gap-2">
         {/* Text Formatting */}
         <div className="flex gap-1 border-r border-gray-300 pr-2">
           <button
-            onClick={() => editor.chain().focus().toggleBold().run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().toggleBold().run()
+            )}
             className={`p-2 rounded ${
               editor.isActive("bold")
                 ? "bg-blue-500 text-white"
@@ -84,7 +94,10 @@ const MenuBar = ({ editor }) => {
             <strong>B</strong>
           </button>
           <button
-            onClick={() => editor.chain().focus().toggleItalic().run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().toggleItalic().run()
+            )}
             className={`p-2 rounded ${
               editor.isActive("italic")
                 ? "bg-blue-500 text-white"
@@ -95,7 +108,10 @@ const MenuBar = ({ editor }) => {
             <em>I</em>
           </button>
           <button
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().toggleUnderline().run()
+            )}
             className={`p-2 rounded ${
               editor.isActive("underline")
                 ? "bg-blue-500 text-white"
@@ -106,7 +122,10 @@ const MenuBar = ({ editor }) => {
             <u>U</u>
           </button>
           <button
-            onClick={() => editor.chain().focus().toggleStrike().run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().toggleStrike().run()
+            )}
             className={`p-2 rounded ${
               editor.isActive("strike")
                 ? "bg-blue-500 text-white"
@@ -121,9 +140,10 @@ const MenuBar = ({ editor }) => {
         {/* Headings */}
         <div className="flex gap-1 border-r border-gray-300 pr-2">
           <button
-            onClick={() =>
+            type="button"
+            onClick={handleButtonClick(() =>
               editor.chain().focus().toggleHeading({ level: 1 }).run()
-            }
+            )}
             className={`p-2 rounded ${
               editor.isActive("heading", { level: 1 })
                 ? "bg-blue-500 text-white"
@@ -134,9 +154,10 @@ const MenuBar = ({ editor }) => {
             H1
           </button>
           <button
-            onClick={() =>
+            type="button"
+            onClick={handleButtonClick(() =>
               editor.chain().focus().toggleHeading({ level: 2 }).run()
-            }
+            )}
             className={`p-2 rounded ${
               editor.isActive("heading", { level: 2 })
                 ? "bg-blue-500 text-white"
@@ -147,9 +168,10 @@ const MenuBar = ({ editor }) => {
             H2
           </button>
           <button
-            onClick={() =>
+            type="button"
+            onClick={handleButtonClick(() =>
               editor.chain().focus().toggleHeading({ level: 3 }).run()
-            }
+            )}
             className={`p-2 rounded ${
               editor.isActive("heading", { level: 3 })
                 ? "bg-blue-500 text-white"
@@ -164,7 +186,10 @@ const MenuBar = ({ editor }) => {
         {/* Lists */}
         <div className="flex gap-1 border-r border-gray-300 pr-2">
           <button
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().toggleBulletList().run()
+            )}
             className={`p-2 rounded ${
               editor.isActive("bulletList")
                 ? "bg-blue-500 text-white"
@@ -175,7 +200,10 @@ const MenuBar = ({ editor }) => {
             • List
           </button>
           <button
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().toggleOrderedList().run()
+            )}
             className={`p-2 rounded ${
               editor.isActive("orderedList")
                 ? "bg-blue-500 text-white"
@@ -190,7 +218,10 @@ const MenuBar = ({ editor }) => {
         {/* Text Alignment */}
         <div className="flex gap-1 border-r border-gray-300 pr-2">
           <button
-            onClick={() => editor.chain().focus().setTextAlign("left").run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().setTextAlign("left").run()
+            )}
             className={`p-2 rounded ${
               editor.isActive({ textAlign: "left" })
                 ? "bg-blue-500 text-white"
@@ -201,7 +232,10 @@ const MenuBar = ({ editor }) => {
             ←
           </button>
           <button
-            onClick={() => editor.chain().focus().setTextAlign("center").run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().setTextAlign("center").run()
+            )}
             className={`p-2 rounded ${
               editor.isActive({ textAlign: "center" })
                 ? "bg-blue-500 text-white"
@@ -212,7 +246,10 @@ const MenuBar = ({ editor }) => {
             ↔
           </button>
           <button
-            onClick={() => editor.chain().focus().setTextAlign("right").run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().setTextAlign("right").run()
+            )}
             className={`p-2 rounded ${
               editor.isActive({ textAlign: "right" })
                 ? "bg-blue-500 text-white"
@@ -227,7 +264,10 @@ const MenuBar = ({ editor }) => {
         {/* Code and Blockquote */}
         <div className="flex gap-1 border-r border-gray-300 pr-2">
           <button
-            onClick={() => editor.chain().focus().toggleCode().run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().toggleCode().run()
+            )}
             className={`p-2 rounded ${
               editor.isActive("code")
                 ? "bg-blue-500 text-white"
@@ -238,7 +278,10 @@ const MenuBar = ({ editor }) => {
             {"</>"}
           </button>
           <button
-            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().toggleCodeBlock().run()
+            )}
             className={`p-2 rounded ${
               editor.isActive("codeBlock")
                 ? "bg-blue-500 text-white"
@@ -249,7 +292,10 @@ const MenuBar = ({ editor }) => {
             {"{ }"}
           </button>
           <button
-            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+            type="button"
+            onClick={handleButtonClick(() =>
+              editor.chain().focus().toggleBlockquote().run()
+            )}
             className={`p-2 rounded ${
               editor.isActive("blockquote")
                 ? "bg-blue-500 text-white"
@@ -264,7 +310,8 @@ const MenuBar = ({ editor }) => {
         {/* Links and Images */}
         <div className="flex gap-1 border-r border-gray-300 pr-2">
           <button
-            onClick={setLink}
+            type="button"
+            onClick={handleButtonClick(setLink)}
             className={`p-2 rounded ${
               editor.isActive("link")
                 ? "bg-blue-500 text-white"
@@ -276,7 +323,8 @@ const MenuBar = ({ editor }) => {
           </button>
           {editor.isActive("link") && (
             <button
-              onClick={removeLink}
+              type="button"
+              onClick={handleButtonClick(removeLink)}
               className="p-2 rounded bg-red-500 text-white hover:bg-red-600"
               title="Remove Link"
             >
@@ -284,7 +332,8 @@ const MenuBar = ({ editor }) => {
             </button>
           )}
           <button
-            onClick={addImage}
+            type="button"
+            onClick={handleButtonClick(addImage)}
             className="p-2 rounded bg-white hover:bg-gray-100"
             title="Add Image"
           >
@@ -297,9 +346,10 @@ const MenuBar = ({ editor }) => {
         {/* Clear Formatting */}
         <div className="flex gap-1">
           <button
-            onClick={() =>
+            type="button"
+            onClick={handleButtonClick(() =>
               editor.chain().focus().clearNodes().unsetAllMarks().run()
-            }
+            )}
             className="p-2 rounded bg-white hover:bg-gray-100"
             title="Clear Formatting"
           >
@@ -340,13 +390,52 @@ const TipTapEditor = ({
     ],
     content,
     onUpdate: ({ editor }) => {
+      // Only update content, don't trigger any form submission
       onChange(editor.getHTML());
+    },
+    editorProps: {
+      handleKeyDown: (view, event) => {
+        // Prevent form submission on Enter key in certain contexts
+        if (event.key === "Enter" && event.ctrlKey) {
+          event.preventDefault();
+          return true;
+        }
+        // Prevent form submission on Enter key when not in a list or blockquote
+        if (
+          event.key === "Enter" &&
+          !editor.isActive("bulletList") &&
+          !editor.isActive("orderedList") &&
+          !editor.isActive("blockquote")
+        ) {
+          // Allow normal Enter behavior
+          return false;
+        }
+        return false;
+      },
+      handleDOMEvents: {
+        keydown: (view, event) => {
+          // Additional safeguard for form submission prevention
+          if (event.key === "Enter" && event.ctrlKey) {
+            event.preventDefault();
+            return true;
+          }
+          return false;
+        },
+      },
     },
     immediatelyRender: false,
   });
 
   return (
-    <div className="border border-gray-300 rounded-lg overflow-hidden">
+    <div
+      className="border border-gray-300 rounded-lg overflow-hidden"
+      onKeyDown={(e) => {
+        // Prevent form submission on Enter key
+        if (e.key === "Enter" && e.ctrlKey) {
+          e.preventDefault();
+        }
+      }}
+    >
       <MenuBar editor={editor} />
       <EditorContent
         editor={editor}

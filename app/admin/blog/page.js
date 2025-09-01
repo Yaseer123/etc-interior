@@ -42,6 +42,18 @@ export default function BlogPosts() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
+
+    console.log("Form submitted manually"); // Debug log
+
+    // Prevent multiple submissions
+    if (e.target.dataset.submitting === "true") {
+      console.log("Form already submitting, preventing duplicate submission");
+      return;
+    }
+
+    e.target.dataset.submitting = "true";
+
     try {
       const url = editingPost
         ? `/api/admin/blog/${editingPost.id}`
@@ -63,6 +75,8 @@ export default function BlogPosts() {
       }
     } catch (error) {
       console.error("Error saving blog post:", error);
+    } finally {
+      e.target.dataset.submitting = "false";
     }
   };
 
@@ -182,7 +196,16 @@ export default function BlogPosts() {
             <h3 className="text-lg font-medium text-gray-900 mb-4">
               {editingPost ? "Edit Blog Post" : "Add New Blog Post"}
             </h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-4"
+              onKeyDown={(e) => {
+                // Prevent form submission on Enter key
+                if (e.key === "Enter" && e.ctrlKey) {
+                  e.preventDefault();
+                }
+              }}
+            >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
@@ -239,7 +262,10 @@ export default function BlogPosts() {
                 </label>
                 <TipTapEditor
                   content={formData.content}
-                  onChange={(content) => setFormData({ ...formData, content })}
+                  onChange={(content) => {
+                    // Only update content, don't trigger any other actions
+                    setFormData((prev) => ({ ...prev, content }));
+                  }}
                   placeholder="Start writing your blog post..."
                 />
               </div>
