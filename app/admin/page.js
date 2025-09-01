@@ -93,6 +93,25 @@ export default function AdminDashboard() {
     },
   ];
 
+  // Cache management functions
+  const clearSliderCache = () => {
+    if (typeof window !== "undefined" && window.clearSliderCache) {
+      window.clearSliderCache();
+      alert("Slider cache cleared successfully!");
+    } else {
+      alert("Cache functions not available. Please refresh the page.");
+    }
+  };
+
+  const refreshSliderCache = async () => {
+    if (typeof window !== "undefined" && window.refreshSliderCache) {
+      await window.refreshSliderCache();
+      alert("Slider cache refreshed successfully!");
+    } else {
+      alert("Cache functions not available. Please refresh the page.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -125,6 +144,39 @@ export default function AdminDashboard() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
+          {/* Cache Management Section */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Cache Management
+            </h2>
+            <div className="bg-white shadow rounded-lg p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900">
+                    Slider Cache
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    Manage slider data caching for better performance
+                  </p>
+                </div>
+                <div className="flex space-x-3">
+                  <button
+                    onClick={refreshSliderCache}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
+                  >
+                    Refresh Cache
+                  </button>
+                  <button
+                    onClick={clearSliderCache}
+                    className="bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-700"
+                  >
+                    Clear Cache
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {adminSections.map((section) => (
               <Link

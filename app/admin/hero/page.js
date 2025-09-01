@@ -58,6 +58,11 @@ export default function HeroSections() {
         setEditingSection(null);
         resetForm();
         fetchHeroSections();
+
+        // Clear slider cache after updating hero content
+        if (typeof window !== "undefined" && window.clearSliderCache) {
+          window.clearSliderCache();
+        }
       }
     } catch (error) {
       console.error("Error saving hero section:", error);
@@ -89,6 +94,11 @@ export default function HeroSections() {
 
       if (response.ok) {
         fetchHeroSections();
+
+        // Clear slider cache after deleting hero content
+        if (typeof window !== "undefined" && window.clearSliderCache) {
+          window.clearSliderCache();
+        }
       }
     } catch (error) {
       console.error("Error deleting hero section:", error);
