@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function Clients() {
+export default function Clients({ showHeader = true }) {
   const [clients, setClients] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -41,15 +41,17 @@ export default function Clients() {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Our Trusted Clients
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            We've had the privilege of working with amazing clients who trust us
-            with their projects.
-          </p>
-        </div>
+        {showHeader && (
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Our Trusted Clients
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We've had the privilege of working with amazing clients who trust
+              us with their projects.
+            </p>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
           {clients.map((client) => (
@@ -169,5 +171,3 @@ export default function Clients() {
     </section>
   );
 }
-
-

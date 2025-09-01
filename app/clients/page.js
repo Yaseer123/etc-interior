@@ -24,7 +24,7 @@ export default function ClientsPage() {
           </div>
 
           <div className="clients-content-section">
-            <Clients />
+            <Clients showHeader={false} />
           </div>
 
           <div className="why-choose-section mt-16 text-center">
