@@ -85,6 +85,12 @@ export default function AdminDashboard() {
       href: "/admin/messages",
       icon: "📧",
     },
+    {
+      title: "Clients",
+      description: "Manage client information and testimonials",
+      href: "/admin/clients",
+      icon: "👥",
+    },
   ];
 
   return (
