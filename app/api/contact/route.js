@@ -1,5 +1,10 @@
+import {
+  contactFormEmailSubject,
+  contactFormEmailTemplate,
+} from "@/lib/email-templates";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 export async function POST(request) {
   try {
@@ -33,6 +38,33 @@ export async function POST(request) {
         isRead: false,
       },
     });
+
+    // Send email notification via Resend
+    try {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+
+      const emailHtml = contactFormEmailTemplate({
+        name,
+        email,
+        phone,
+        subject,
+        message,
+        messageId: contactMessage.id,
+      });
+
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL || "noreply@yourdomain.com", // You'll need to update this with your verified domain
+        to: [process.env.ADMIN_EMAIL || "admin@yourdomain.com"], // You'll need to set this in your .env
+        subject: contactFormEmailSubject(subject),
+        html: emailHtml,
+        replyTo: email, // This allows you to reply directly to the person who submitted the form
+      });
+
+      console.log("Email sent successfully via Resend");
+    } catch (emailError) {
+      console.error("Error sending email via Resend:", emailError);
+      // Don't fail the entire request if email fails, just log the error
+    }
 
     return NextResponse.json(
       {
