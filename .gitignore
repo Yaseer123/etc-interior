@@ -1,7 +1,9 @@
 node_modules
-node_modules
-
 .next
 .env
+.env.local
+.env.production
 
-/lib/generated/prisma
+# Prisma generated client should be committed for production
+# /lib/generated/prisma
+.vercel
