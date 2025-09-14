@@ -25,10 +25,40 @@
 ====================================================================
 ***/
 /* Module Css */
-@import "tailwindcss";
+@import url("./bootstrap.min.css");
 @import url("./all.min.css");
 @import url("./animate.min.css");
-@import url("./bootstrap.min.css");
+@import "tailwindcss";
+
+/* Ensure Tailwind utility classes take precedence */
+.text-white {
+  color: #ffffff !important;
+}
+.bg-red-600 {
+  background-color: #dc2626 !important;
+}
+.bg-indigo-600 {
+  background-color: #4f46e5 !important;
+}
+.bg-blue-600 {
+  background-color: #2563eb !important;
+}
+.bg-green-600 {
+  background-color: #16a34a !important;
+}
+.hover\:bg-red-700:hover {
+  background-color: #b91c1c !important;
+}
+.hover\:bg-indigo-700:hover {
+  background-color: #4338ca !important;
+}
+.hover\:bg-blue-700:hover {
+  background-color: #1d4ed8 !important;
+}
+.hover\:bg-green-700:hover {
+  background-color: #15803d !important;
+}
+
 @import url("./color-1.css");
 @import url("./color-2.css");
 @import url("./color-3.css");
