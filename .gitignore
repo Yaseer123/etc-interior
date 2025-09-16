@@ -7,3 +7,4 @@ node_modules
 # Prisma generated client should be committed for production
 # /lib/generated/prisma
 .vercel
+settings.json
