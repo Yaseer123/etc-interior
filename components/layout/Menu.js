@@ -108,80 +108,11 @@ export default function Menu() {
             </li>
           </ul>
         </li>
-        <li
-          className={`${
-            isParentActive([
-              { href: "/team" },
-              { href: "/projects" },
-              { href: "/testimonials" },
-              { href: "/pricing" },
-              { href: "/faq" },
-            ])
-              ? "active"
-              : ""
-          } menu-item-has-children`}
-        >
-          <Link href="#">Pages</Link>
-          <ul className="sub-menu">
-            <li>
-              <Link href="/team" className={isActive("/team") ? "active" : ""}>
-                Team
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/team-details"
-                className={isActive("/team-details") ? "active" : ""}
-              >
-                Team Details
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/projects"
-                className={isActive("/projects") ? "active" : ""}
-              >
-                Projects
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/project-details"
-                className={isActive("/project-details") ? "active" : ""}
-              >
-                Project Details
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/testimonials"
-                className={isActive("/testimonials") ? "active" : ""}
-              >
-                Testimonials
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/pricing"
-                className={isActive("/pricing") ? "active" : ""}
-              >
-                Pricing
-              </Link>
-            </li>
-            <li>
-              <Link href="/faq" className={isActive("/faq") ? "active" : ""}>
-                Faq
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/error"
-                className={isActive("/error") ? "active" : ""}
-              >
-                Error
-              </Link>
-            </li>
-          </ul>
+        <li className={isActive("/projects") ? "active" : ""}>
+          <Link href="/projects">Projects</Link>
+        </li>
+        <li className={isActive("/pricing") ? "active" : ""}>
+          <Link href="/pricing">Pricing</Link>
         </li>
         <li>
           <a href="https://www.etcbangladesh.com/">Shop</a>
