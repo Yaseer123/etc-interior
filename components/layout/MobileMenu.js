@@ -341,59 +341,10 @@ export default function MobileMenu({
                   <span className="fa fa-angle-right" />
                 </div>
               </li>
-              <li
-                className={`${
-                  isParentActive([
-                    { href: "/blog" },
-                    { href: "/blog-sidebar" },
-                    { href: "/blog-details" },
-                  ])
-                    ? "active"
-                    : ""
-                } menu-item-has-children`}
-              >
-                <Link href="#" onClick={handleMobileMenu}>
+              <li className={isMenuActive("/blog") ? "active" : ""}>
+                <Link href="/blog" onClick={handleMobileMenu}>
                   Blog
                 </Link>
-                <ul
-                  style={{ display: `${isActive.key == 5 ? "block" : "none"}` }}
-                >
-                  <li>
-                    <Link
-                      href="/blog"
-                      onClick={handleMobileMenu}
-                      className={isMenuActive("/blog") ? "active" : ""}
-                    >
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/blog-sidebar"
-                      onClick={handleMobileMenu}
-                      className={isMenuActive("/blog-sidebar") ? "active" : ""}
-                    >
-                      Blog Sidebar
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/blog-details"
-                      onClick={handleMobileMenu}
-                      className={isMenuActive("/blog-details") ? "active" : ""}
-                    >
-                      Blog Details
-                    </Link>
-                  </li>
-                </ul>
-                <div
-                  className={
-                    isActive.key == 5 ? "dropdown-btn open" : "dropdown-btn"
-                  }
-                  onClick={() => handleToggle(5)}
-                >
-                  <span className="fa fa-angle-right" />
-                </div>
               </li>
               <li className={isMenuActive("/contact") ? "active" : ""}>
                 <Link href="/contact" onClick={handleMobileMenu}>

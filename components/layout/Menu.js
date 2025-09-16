@@ -224,41 +224,8 @@ export default function Menu() {
             </li>
           </ul>
         </li>
-        <li
-          className={`${
-            isParentActive([
-              { href: "/blog" },
-              { href: "/blog-sidebar" },
-              { href: "/blog-details" },
-            ])
-              ? "active"
-              : ""
-          } menu-item-has-children`}
-        >
-          <Link href="#">Blog</Link>
-          <ul className="sub-menu">
-            <li>
-              <Link href="/blog" className={isActive("/blog") ? "active" : ""}>
-                Blog
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/blog-sidebar"
-                className={isActive("/blog-sidebar") ? "active" : ""}
-              >
-                Blog Sidebar
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/blog-details"
-                className={isActive("/blog-details") ? "active" : ""}
-              >
-                Blog Details
-              </Link>
-            </li>
-          </ul>
+        <li className={isActive("/blog") ? "active" : ""}>
+          <Link href="/blog">Blog</Link>
         </li>
         <li className={isActive("/contact") ? "active" : ""}>
           <Link href="/contact">Contact</Link>
