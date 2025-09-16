@@ -183,46 +183,8 @@ export default function Menu() {
             </li>
           </ul>
         </li>
-        <li
-          className={`${
-            isParentActive([
-              { href: "/shop" },
-              { href: "/cart" },
-              { href: "/checkout" },
-            ])
-              ? "active"
-              : ""
-          } menu-item-has-children`}
-        >
-          <Link href="#">Shop</Link>
-          <ul className="sub-menu">
-            <li>
-              <Link href="/shop" className={isActive("/shop") ? "active" : ""}>
-                Shop
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop-details"
-                className={isActive("/shop-details") ? "active" : ""}
-              >
-                Shop Details
-              </Link>
-            </li>
-            <li>
-              <Link href="/cart" className={isActive("/cart") ? "active" : ""}>
-                Cart
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/checkout"
-                className={isActive("/checkout") ? "active" : ""}
-              >
-                Checkout
-              </Link>
-            </li>
-          </ul>
+        <li>
+          <a href="https://www.etcbangladesh.com/">Shop</a>
         </li>
         <li className={isActive("/blog") ? "active" : ""}>
           <Link href="/blog">Blog</Link>

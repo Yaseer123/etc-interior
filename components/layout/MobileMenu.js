@@ -279,67 +279,13 @@ export default function MobileMenu({
                   <span className="fa fa-angle-right" />
                 </div>
               </li>
-              <li
-                className={`${
-                  isParentActive([
-                    { href: "/shop" },
-                    { href: "/cart" },
-                    { href: "/checkout" },
-                  ])
-                    ? "active"
-                    : ""
-                } menu-item-has-children`}
-                onClick={handleMobileMenu}
-              >
-                <Link href="#">Shop</Link>
-                <ul
-                  style={{ display: `${isActive.key == 4 ? "block" : "none"}` }}
+              <li>
+                <a
+                  href="https://www.etcbangladesh.com/"
+                  onClick={handleMobileMenu}
                 >
-                  <li>
-                    <Link
-                      href="/shop"
-                      onClick={handleMobileMenu}
-                      className={isMenuActive("/shop") ? "active" : ""}
-                    >
-                      Shop
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/shop-details"
-                      onClick={handleMobileMenu}
-                      className={isMenuActive("/shop-details") ? "active" : ""}
-                    >
-                      Shop Details
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/cart"
-                      onClick={handleMobileMenu}
-                      className={isMenuActive("/cart") ? "active" : ""}
-                    >
-                      Cart
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="checkout"
-                      onClick={handleMobileMenu}
-                      className={isMenuActive("/checkout") ? "active" : ""}
-                    >
-                      Checkout
-                    </Link>
-                  </li>
-                </ul>
-                <div
-                  className={
-                    isActive.key == 4 ? "dropdown-btn open" : "dropdown-btn"
-                  }
-                  onClick={() => handleToggle(4)}
-                >
-                  <span className="fa fa-angle-right" />
-                </div>
+                  Shop
+                </a>
               </li>
               <li className={isMenuActive("/blog") ? "active" : ""}>
                 <Link href="/blog" onClick={handleMobileMenu}>
