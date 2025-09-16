@@ -8,9 +8,7 @@ export default function Menu() {
   // Function to check if a menu item should be active
   const isActive = (href) => {
     if (href === "/") {
-      return (
-        pathname === "/" || pathname === "/index-2" || pathname === "/index-3"
-      );
+      return pathname === "/";
     }
     if (href === "#") {
       return false; // Parent menu items with dropdowns
@@ -26,33 +24,8 @@ export default function Menu() {
   return (
     <>
       <ul className="navigation">
-        <li
-          className={`${isActive("/") ? "active" : ""} menu-item-has-children`}
-        >
-          <Link href="#">Home</Link>
-          <ul className="sub-menu">
-            <li>
-              <Link href="/" className={pathname === "/" ? "active" : ""}>
-                Home One
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/index-2"
-                className={pathname === "/index-2" ? "active" : ""}
-              >
-                Home Two
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/index-3"
-                className={pathname === "/index-3" ? "active" : ""}
-              >
-                Home Three
-              </Link>
-            </li>
-          </ul>
+        <li className={isActive("/") ? "active" : ""}>
+          <Link href="/">Home</Link>
         </li>
         <li className={isActive("/about") ? "active" : ""}>
           <Link href="/about">About</Link>

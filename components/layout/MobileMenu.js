@@ -17,9 +17,7 @@ export default function MobileMenu({
   // Function to check if a menu item should be active
   const isMenuActive = (href) => {
     if (href === "/") {
-      return (
-        pathname === "/" || pathname === "/index-2" || pathname === "/index-3"
-      );
+      return pathname === "/";
     }
     if (href === "#") {
       return false; // Parent menu items with dropdowns
@@ -59,55 +57,10 @@ export default function MobileMenu({
           </div>
           <div className="menu-outer">
             <ul className="navigation clearfix">
-              <li
-                className={`${
-                  isMenuActive("/") ? "active" : ""
-                } menu-item-has-children`}
-              >
-                {" "}
-                <Link href="#" onClick={handleMobileMenu}>
+              <li className={isMenuActive("/") ? "active" : ""}>
+                <Link href="/" onClick={handleMobileMenu}>
                   Home
                 </Link>
-                <ul
-                  className="sub-menu"
-                  style={{ display: `${isActive.key == 1 ? "block" : "none"}` }}
-                >
-                  <li>
-                    <Link
-                      href="/"
-                      onClick={handleMobileMenu}
-                      className={pathname === "/" ? "active" : ""}
-                    >
-                      Home One
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/index-2"
-                      onClick={handleMobileMenu}
-                      className={pathname === "/index-2" ? "active" : ""}
-                    >
-                      Home Two
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/index-3"
-                      onClick={handleMobileMenu}
-                      className={pathname === "/index-3" ? "active" : ""}
-                    >
-                      Home Three
-                    </Link>
-                  </li>
-                </ul>
-                <div
-                  className={
-                    isActive.key == 1 ? "dropdown-btn open" : "dropdown-btn"
-                  }
-                  onClick={() => handleToggle(1)}
-                >
-                  <span className="fa fa-angle-right" />
-                </div>
               </li>
               <li className={isMenuActive("/about") ? "active" : ""}>
                 <Link href="/about" onClick={handleMobileMenu}>
