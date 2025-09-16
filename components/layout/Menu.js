@@ -27,9 +27,6 @@ export default function Menu() {
         <li className={isActive("/") ? "active" : ""}>
           <Link href="/">Home</Link>
         </li>
-        <li className={isActive("/about") ? "active" : ""}>
-          <Link href="/about">About</Link>
-        </li>
         <li className={isActive("/clients") ? "active" : ""}>
           <Link href="/clients">Clients</Link>
         </li>

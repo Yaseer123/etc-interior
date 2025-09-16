@@ -62,11 +62,6 @@ export default function MobileMenu({
                   Home
                 </Link>
               </li>
-              <li className={isMenuActive("/about") ? "active" : ""}>
-                <Link href="/about" onClick={handleMobileMenu}>
-                  About
-                </Link>
-              </li>
               <li className={isMenuActive("/clients") ? "active" : ""}>
                 <Link href="/clients" onClick={handleMobileMenu}>
                   Clients
